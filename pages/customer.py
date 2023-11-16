@@ -4,6 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 
+from pages.account import Banking
 from pages.base import BasePage
 
 
@@ -32,4 +33,4 @@ class CustomerPage(BasePage):
                 (By.CSS_SELECTOR, 'button[ng-click="deposit()"]')
             )
         )
-        return self
+        return Banking(self.driver)

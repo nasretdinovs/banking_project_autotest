@@ -169,3 +169,6 @@ allure_results/
 
 # Selenium GRID
 selenium-server-4.15.0.jar
+
+# Cформированный файл к отчету allure
+report_transactions.csv
