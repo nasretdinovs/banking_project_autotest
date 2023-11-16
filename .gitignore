@@ -161,9 +161,11 @@ cython_debug/
 
 # Папка с отчетами Allure
 allure-report/
+allure_report/
 
 # Папка с результатами тестов Allure
 allure-results/
+allure_results/
 
 # Selenium GRID
 selenium-server-4.15.0.jar
