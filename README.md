@@ -8,14 +8,16 @@
 
 ## Настройка Selenium Grid
 
-1. Запустите Selenium Grid Hub из корневой папки проекта командой:
+1. Скачайте Selenium Server (Grid) с [официального сайта Selenium](https://www.selenium.dev/downloads/). В данном примере используется версия `selenium-server-4.15.0.jar`
+
+1. Запустите Selenium Grid Hub командой:
     ```bash
-    java -jar grid/selenium-server-4.15.0.jar hub
+    java -jar selenium-server-4.15.0.jar hub
     ```
 
-2. Запустите Selenium Grid Node из корневой папки проекта командой:
+2. Запустите Selenium Grid Node командой:
     ```bash
-    java -jar grid/selenium-server-4.15.0.jar node --detect-drivers true --grid-url http://192.168.1.136:4444
+    java -jar selenium-server-4.15.0.jar node --detect-drivers true --grid-url http://192.168.1.136:4444
     ```
 URL адрес будет отличаться, необходимо подставить свой из терминала, 
 где запустили Selenium Grid Hub.
