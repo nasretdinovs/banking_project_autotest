@@ -9,8 +9,12 @@ from pages.base import BasePage
 
 
 class CustomerPage(BasePage):
-    @allure.step("Выбираем пользователя из списка")
-    def select_customer(self, customer_name):
+    """Класс, представляющий страницу выбора пользователя."""
+
+    @allure.step('Выбираем пользователя из списка')
+    def select_customer(self, customer_name: str) -> 'CustomerPage':
+        """Метод для выбора пользователя из списка."""
+
         WebDriverWait(self.driver, 10).until(
             EC.text_to_be_present_in_element(
                 (By.CSS_SELECTOR, 'label'),
@@ -21,8 +25,9 @@ class CustomerPage(BasePage):
         select.select_by_visible_text(customer_name)
         return self
 
-    @allure.step("Нажимаем кнопку Login")
-    def click_login(self):
+    @allure.step('Нажимаем кнопку Login')
+    def click_login(self) -> 'Banking':
+        """Метод для нажатия кнопки Login."""
         login_button = self.driver.find_element(
             By.CSS_SELECTOR,
             'button[type="submit"]'

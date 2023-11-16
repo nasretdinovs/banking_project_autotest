@@ -8,8 +8,12 @@ from pages.transactions import TransactionsPage
 
 
 class Banking(BasePage):
-    @allure.step("Вносим средства на счёт")
-    def make_deposit(self, amount):
+    """Класс, представляющий страницу банковских операций."""
+
+    @allure.step('Вносим средства на счёт')
+    def make_deposit(self, amount: int) -> 'Banking':
+        """Метод для внесения средств на счёт."""
+
         deposit_button = self.driver.find_element(
             By.CSS_SELECTOR,
             'button[ng-click="deposit()"]'
@@ -40,8 +44,10 @@ class Banking(BasePage):
         )
         return self
 
-    @allure.step("Списываем средства со счёта")
-    def make_withdrawal(self, amount):
+    @allure.step('Списываем средства со счёта')
+    def make_withdrawal(self, amount: int) -> 'TransactionsPage':
+        """Метод для списания средств со счёта."""
+
         withdrawal_button = self.driver.find_element(
             By.CSS_SELECTOR,
             'button[ng-click="withdrawl()"]'
@@ -73,8 +79,10 @@ class Banking(BasePage):
         )
         return TransactionsPage(self.driver)
 
-    @allure.step("Проверяем баланс")
-    def check_balance(self):
+    @allure.step('Проверяем баланс')
+    def check_balance(self) -> int:
+        """Метод для проверки баланса на счёте."""
+
         balance_element = self.driver.find_element(
             By.XPATH,
             '//div[@ng-hide="noAccount"]/strong[2]'

@@ -1,6 +1,6 @@
 import csv
 import time
-
+from typing import Generator, Tuple
 import allure
 import pytest
 from allure_commons.types import AttachmentType
@@ -13,7 +13,11 @@ from utils import fibonacci_for_date
 
 
 @pytest.fixture
-def driver_options():
+def driver_options() -> Generator[Tuple[Remote, LoginPage], None, None]:
+    """Фикстура для создания Selenium драйвера с заданными опциями и
+    открытия страницы входа.
+    """
+
     options = Options()
     options.set_capability('browserName', 'chrome')
 
@@ -26,24 +30,28 @@ def driver_options():
     driver.quit()
 
 
-@allure.description("Тестирование входа пользователя")
+@allure.description('Тестирование входа пользователя')
 @allure.feature('Banking Project')
 @allure.story('Тест страницы Login')
-def test_login(driver_options):
+def test_login(driver_options: Tuple[Remote, LoginPage]) -> None:
+    """Тестирование входа пользователя."""
+
     driver, login_page = driver_options
     customer_page = login_page.click_customer()
     customer_page.select_customer(USER)
     customer_page.click_login()
 
-    assert "XYZ Bank" in driver.title
+    assert 'XYZ Bank' in driver.title
     assert driver.current_url == ACCOUNT_URL, (
         f'Ожидаемый URL: {ACCOUNT_URL}, а фактический: {driver.current_url}')
 
 
-@allure.description("Тестирование операций пополнения и снятия средств")
+@allure.description('Тестирование операций пополнения и снятия средств')
 @allure.feature('Banking Project')
 @allure.story('Тест пополнения и снятия средств со счёта')
-def test_deposit_withdraw(driver_options):
+def test_deposit_withdraw(driver_options: Tuple[Remote, LoginPage]) -> None:
+    """Тестирование операций пополнения и снятия средств."""
+
     driver, login_page = driver_options
     customer_page = login_page.click_customer()
     customer_page.select_customer(USER)
@@ -52,17 +60,19 @@ def test_deposit_withdraw(driver_options):
     bank_operations.make_deposit(amount)
     bank_operations.make_withdrawal(amount)
 
-    assert "XYZ Bank" in driver.title
+    assert 'XYZ Bank' in driver.title
     assert bank_operations.check_balance() == 0, (
-        f"Ожидаемый баланс после вывода средств: 0, "
-        f"а фактический: {bank_operations.check_balance()}"
+        f'Ожидаемый баланс после вывода средств: 0, '
+        f'а фактический: {bank_operations.check_balance()}'
     )
 
 
-@allure.description("Проверка на наличие списка транзакций")
+@allure.description('Проверка на наличие списка транзакций')
 @allure.feature('Banking Project')
 @allure.story('Тест наличия выполненных транзакций')
-def test_transactions(driver_options):
+def test_transactions(driver_options: Tuple[Remote, LoginPage]) -> None:
+    """Проверка наличия списка транзакций."""
+
     driver, login_page = driver_options
     customer_page = login_page.click_customer()
     customer_page.select_customer(USER)
@@ -77,8 +87,8 @@ def test_transactions(driver_options):
     transaction_elements = transaction_page.check_transactions()
     num_transactions = len(transaction_elements)
     assert num_transactions == 2, (
-        f"Ожидаемое количество транзакций: 2, "
-        f"а фактическое: {num_transactions}"
+        f'Ожидаемое количество транзакций: 2, '
+        f'а фактическое: {num_transactions}'
     )
     assert driver.current_url == TRANSACTIONS_URL, (
         f'Ожидаемый URL: {TRANSACTIONS_URL}, '
